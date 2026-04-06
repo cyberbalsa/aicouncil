@@ -1,0 +1,24 @@
+{
+  "agents": {
+    "claude": { "id": "claude", "displayName": "Claude", "cli": "claude", "model": "opus", "enabled": true, "timeout": 120, "priority": 5 },
+    "codex": { "id": "codex", "displayName": "Codex", "cli": "codex", "model": null, "enabled": true, "timeout": 120, "priority": 4 },
+    "gemini": { "id": "gemini", "displayName": "Gemini", "cli": "gemini", "model": null, "enabled": true, "timeout": 120, "priority": 3 },
+    "minimax": { "id": "minimax", "displayName": "MiniMax", "cli": "opencode", "model": "minimax/MiniMax-M2.7-highspeed", "enabled": true, "timeout": 120, "priority": 2 },
+    "kimi": { "id": "kimi", "displayName": "Kimi", "cli": "opencode", "model": "kimi-for-coding/k2p5", "enabled": true, "timeout": 120, "priority": 1 }
+  },
+  "council": {
+    "maxRounds": 3,
+    "quorum": 3,
+    "globalRoundTimeout": 300,
+    "maxOutputSize": 51200,
+    "autoEscalate": true,
+    "moderator": "claude",
+    "stalenessTimeout": 30
+  },
+  "routing": {
+    "debug": "codex",
+    "research": "gemini",
+    "review": "claude",
+    "alternative": ["minimax", "kimi"]
+  }
+}

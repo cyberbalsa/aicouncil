@@ -1,0 +1,14 @@
+{
+  "name": "aicouncil",
+  "version": "0.1.0",
+  "description": "AI Council plugin for Claude Code — orchestrates 5 AI agents via official CLIs",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/**/*.test.mjs",
+    "test:watch": "node --test --watch tests/**/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "MIT"
+}
