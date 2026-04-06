@@ -2,5 +2,7 @@
   "name": "aicouncil",
   "version": "0.1.0",
   "description": "Orchestrate Claude, Codex, Gemini, MiniMax, and Kimi to collaborate on plans and reviews",
-  "author": "balsa"
+  "author": {
+    "name": "balsa"
+  }
 }
