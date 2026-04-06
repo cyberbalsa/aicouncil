@@ -24,9 +24,11 @@ describe('state', () => {
     assert.equal(loaded.id, session.id);
     assert.equal(loaded.mode, 'consult');
   });
-  it('lists sessions sorted newest first', () => {
+  it('lists sessions sorted newest first', async () => {
     const s1 = createSession({ mode: 'ask', originalQuestion: 'Q1', workspaceRoot: tmpDir });
     saveSession(tmpDir, s1);
+    // Ensure different timestamp
+    await new Promise(r => setTimeout(r, 10));
     const s2 = createSession({ mode: 'ask', originalQuestion: 'Q2', workspaceRoot: tmpDir });
     saveSession(tmpDir, s2);
     const list = listSessions(tmpDir);
