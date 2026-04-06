@@ -9,7 +9,7 @@ export class MiniMaxAdapter extends BaseAdapter {
   }
   get minVersion() { return '0.1.0'; }
 
-  _dataDir() { return `/tmp/council-minimax-${this.sessionId || 'default'}`; }
+  _dataDir() { return `/tmp/council-${this.id}-${this.sessionId || 'default'}`; }
 
   async *execute(prompt, opts = {}) {
     const cliPath = this.cliPath || await this.resolveCli();
@@ -19,7 +19,7 @@ export class MiniMaxAdapter extends BaseAdapter {
     const result = await spawnAgent(cliPath, args, {
       timeout: opts.timeout || this.timeout, maxOutput: opts.maxOutput || 51200,
       stalenessTimeout: opts.stalenessTimeout || 30000, cwd: opts.cwd,
-      env: { OPENCODE_DATA_DIR: this._dataDir() },
+      env: { XDG_DATA_HOME: this._dataDir() },
     });
     if (result.timedOut) { yield { type: 'timed_out', agentId: this.id, timeoutMs: opts.timeout || this.timeout }; return; }
     const hasError = result.stdout.toLowerCase().includes('error') && result.stdout.trim().length < 200;
@@ -41,7 +41,7 @@ export class MiniMaxAdapter extends BaseAdapter {
     const cliPath = this.cliPath || await this.resolveCli();
     if (!cliPath) return false;
     const result = await spawnAgent(cliPath, ['run', '-m', this.model, 'reply with OK'], {
-      timeout: 20000, maxOutput: 1024, env: { OPENCODE_DATA_DIR: this._dataDir() },
+      timeout: 20000, maxOutput: 1024, env: { XDG_DATA_HOME: this._dataDir() },
     });
     return result.stdout.trim().length > 0 && !result.timedOut;
   }

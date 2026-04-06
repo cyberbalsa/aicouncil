@@ -267,7 +267,12 @@ export class Orchestrator {
    * @returns {Promise<Array>}
    */
   async runGenerate(question, opts = {}) {
-    const results = await runParallelAgents(this.adapters, question, opts);
+    const councilCfg = this.config.council ?? {};
+    const mergedOpts = {
+      stalenessTimeout: (councilCfg.stalenessTimeout ?? 90) * 1000,
+      ...opts,
+    };
+    const results = await runParallelAgents(this.adapters, question, mergedOpts);
     this.addTranscript(
       results.map((r) => ({
         timestamp: new Date().toISOString(),
@@ -290,6 +295,11 @@ export class Orchestrator {
    * @returns {Promise<Array>}
    */
   async runCritique(question, proposals, opts = {}) {
+    const councilCfg = this.config.council ?? {};
+    const mergedOpts = {
+      stalenessTimeout: (councilCfg.stalenessTimeout ?? 90) * 1000,
+      ...opts,
+    };
     const critiqueAdapters = this.adapters.map((adapter) => ({
       ...adapter,
       _critiquePrompt: buildCritiquePrompt(question, proposals, adapter.id),
@@ -302,7 +312,7 @@ export class Orchestrator {
         let lastEvent = null;
 
         try {
-          for await (const event of adapter.execute(prompt, opts)) {
+          for await (const event of adapter.execute(prompt, mergedOpts)) {
             events.push(event);
             lastEvent = event;
           }
@@ -355,6 +365,11 @@ export class Orchestrator {
    * @returns {Promise<Array>}
    */
   async runVote(question, proposals, opts = {}) {
+    const councilCfg = this.config.council ?? {};
+    const mergedOpts = {
+      stalenessTimeout: (councilCfg.stalenessTimeout ?? 90) * 1000,
+      ...opts,
+    };
     const votePrompt = buildVotePrompt(question, proposals);
 
     const results = await runParallelAgents(
@@ -365,7 +380,7 @@ export class Orchestrator {
         pulseCheck: () => adapter.pulseCheck(),
       })),
       votePrompt,
-      opts,
+      mergedOpts,
     );
 
     this.addTranscript(

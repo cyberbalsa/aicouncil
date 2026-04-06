@@ -1,0 +1,35 @@
+{
+  "name": "aicouncil",
+  "version": "0.1.0",
+  "description": "Orchestrate Claude, Codex, Gemini, MiniMax, and Kimi to collaborate on plans and reviews",
+  "author": {
+    "name": "balsa"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ai",
+    "multi-agent",
+    "planning",
+    "review",
+    "cli"
+  ],
+  "skills": "../../skills/",
+  "hooks": "../../hooks/hooks.json",
+  "interface": {
+    "displayName": "AI Council",
+    "shortDescription": "Run five AI CLIs as a council for plans and reviews.",
+    "longDescription": "AI Council orchestrates Claude, Codex, Gemini, MiniMax, and Kimi through their official CLIs so you can run consults, debates, and chained analysis in one workflow.",
+    "developerName": "balsa",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Run a council on this migration plan.",
+      "Ask Codex to debug this failing test.",
+      "Chain Gemini, Codex, and Claude on this design."
+    ],
+    "brandColor": "#0F766E"
+  }
+}

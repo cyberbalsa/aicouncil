@@ -58,6 +58,13 @@ export class BaseAdapter {
       error = err.message;
     }
 
+    // Test actual authentication via pulseCheck
+    try {
+      authenticated = await this.pulseCheck();
+    } catch {
+      authenticated = false;
+    }
+
     return { available: true, version, authenticated, cliPath, error };
   }
 

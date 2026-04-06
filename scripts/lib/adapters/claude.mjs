@@ -8,7 +8,7 @@ export class ClaudeAdapter extends BaseAdapter {
   async *execute(prompt, opts = {}) {
     const cliPath = this.cliPath || await this.resolveCli();
     if (!cliPath) throw new Error('Claude CLI not found');
-    const args = ['-p', prompt, '--output-format', 'stream-json'];
+    const args = ['-p', prompt, '--output-format', 'stream-json', '--verbose'];
     if (this.model) args.push('--model', this.model);
     args.push('--max-turns', '3');
 
@@ -45,7 +45,7 @@ export class ClaudeAdapter extends BaseAdapter {
   async pulseCheck() {
     const cliPath = this.cliPath || await this.resolveCli();
     if (!cliPath) return false;
-    const result = await spawnAgent(cliPath, ['-p', 'reply with OK', '--max-turns', '1', '--model', 'haiku'], { timeout: 15000, maxOutput: 1024 });
+    const result = await spawnAgent(cliPath, ['-p', 'reply with OK', '--max-turns', '1', '--model', 'haiku', '--output-format', 'stream-json', '--verbose'], { timeout: 15000, maxOutput: 1024 });
     return result.exitCode === 0 && result.stdout.trim().length > 0;
   }
 }

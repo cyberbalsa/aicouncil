@@ -1,0 +1,20 @@
+{
+  "name": "aicouncil-marketplace",
+  "interface": {
+    "displayName": "AI Council Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "aicouncil",
+      "source": {
+        "source": "local",
+        "path": "./plugins/aicouncil"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

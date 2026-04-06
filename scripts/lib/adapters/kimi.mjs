@@ -6,5 +6,5 @@ export class KimiAdapter extends MiniMaxAdapter {
     this.id = 'kimi';
     this.displayName = config.displayName || 'Kimi';
   }
-  _dataDir() { return `/tmp/council-kimi-${this.sessionId || 'default'}`; }
+  _dataDir() { return `/tmp/council-${this.id}-${this.sessionId || 'default'}`; }
 }

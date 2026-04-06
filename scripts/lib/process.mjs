@@ -96,20 +96,26 @@ export function spawnAgent(cmd, args = [], opts = {}) {
     timeout = 120000,
     maxOutput = 51200,
     stalenessTimeout = 30000,
+    cwd,
+    env: extraEnv,
   } = opts;
 
   return new Promise((resolve) => {
     const startMs = Date.now();
 
-    const child = spawn(cmd, args, {
+    const spawnOpts = {
       detached: true,
       stdio: ['ignore', 'pipe', 'pipe'],
       env: {
         ...process.env,
         NO_COLOR: '1',
         TERM: 'dumb',
+        ...extraEnv,
       },
-    });
+    };
+    if (cwd) spawnOpts.cwd = cwd;
+
+    const child = spawn(cmd, args, spawnOpts);
 
     let stdoutBuf = '';
     let stderrBuf = '';
